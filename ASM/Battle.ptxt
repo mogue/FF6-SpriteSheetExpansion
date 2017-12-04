@@ -1,0 +1,44 @@
+# Based on Catone's Mass Sprite Sheet Expansion
+
+? Extra Routines
+>> Battle Intro Adjust
+++ .sub:? Battle Intro Adjust : @@ @@ @@
+		B9 AE 2E 	# LDA $2EAE,Y	
+		C9 17 		# CPA #17	(If sprite sheet higher than 22)
+		30 16 		# BMI +22	(Return to Normal Code if Value in Normal Table)
+		C9 03 		# CPA #03	(If Sprite Sheet #30 - Returner)
+		F0 02 		# BEQ +02	(Jump to Returner Case)	
+		80 04 		# BRA +04	(Continue New Code) 
+		A9 0E 		# LDA #0E	(Mimic Soldier Intro) 
+		80 0C 		# BRA +12	(Return to Normal Code)	
+		C9 23 		# CPA #23	(If Sprite Sheet #35 - Clyde)
+		F0 02 		# BEQ +02	(Jump to Clyde Case)
+		80 04 		# BRA +04	(Continue New Code)
+		A9 0E 		# LDA #03	(Mimic Shadow Intro)
+		80 02 		# BRA +02	(Return to Normal Code)	
+		A9 00 	 	# LDA #0000 	(Mimic Terra Intro)
+		29 1F 		# AND #1F	(Normal Code)
+		6B 		# RTL 		(Return)
+?
+
+>> Expanding Sprites Bank C1 (Sprite Referance)
+# @ C13D66:
+@ C13D63:	BF 02 00 F2	# LDA $F20002,X	; Load High Byte of Table 40/0002 	 	 
+		85 12		# STA $12	 	 	 	 	 	 
+		C2 20		# REP #$20	 	 	 	 	 	 
+		BF 00 00 F2	# LDA $F20000,X 	; Load List from 40/0000
+
+>> Expanding Sprites Bank C1 (Palette Referance)
+# @ C13E20:
+@ C13E1D:	BF 00 03 F2	# LDA $F20400,X	; Pull Palette ID from table in C2 for Sprite X)
+
+>> Expanding Sprites Bank C1 (Battle Intro Adjust)
+# @ C1FEEA:
+@ C1FEFD:	22 		# JSL ->  		; (Jump to New Code to account for new sprites)
+!			.sub? Battle Intro Adjust
+ 		EA	 	# NOP	 
+		0A	 	# ASL A	 
+
+
+# Free’s up space at:
+# $C2CE2B - $C2CE8B (0x60 or 96 bytes)

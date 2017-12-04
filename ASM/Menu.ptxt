@@ -1,0 +1,266 @@
+# Dynamic Menu Character Sprite Loading by m06
+
+# Uses $0200 value #$05
+
+? Extra Routines
+
+-- .sub
+
+>> Dynamic Sprite Index ($@@@@@@)
+++ .sub:? Get sprite index: @@ @@
+               E2 20          # SEP #$20       ; 8-bit A
+		AD 00 02 	# LDA $0200      ; Menu to open
+		C9 05		# CMP #$05	 ; Save menu?
+		F0 04		# BEQ +04	 ; 
+		C9 02    	# CMP #$02       ; Load menu?
+		D0 1F		# BNE +1F	 ; skip if not
+
+	# Fork: 3x4 Party chars (load, save)	
+		DA 		# PHX
+		8A 		# TXA		 ; File: #
+		4A		# LSR A 	 ; divide by 2 (from pointer)
+		4A 4A 		# LSR A		 ; divide by 4 (four members)
+		1A		# INC A		 ; File: 1-3
+		29 03		# AND #$03
+#		A9 02    	# LDA #$02       ; File: 2
+		85 66    	# STA $66        ; ...
+		20 66 15  	# JSR $1566      ; Load save file
+		20 15 69  	# JSR $6915      ; Move party info
+
+                C2 20           # REP #$20       ; 16-bit A
+		FA		# PLX		
+		8A		# TXA
+		4A		# LSR A 	 ; divide by 2 (from pointer)
+		29 03 00 	# AND #$0003
+		AA		# TAX
+                E2 20           # SEP #$20       ; 8-bit A
+		B5 69    	# LDA $69,X      ; Actor in slot
+		0A 		# ASL A 	 ; double it
+		AA		# TAX
+#		20 97 6F  	# JSR $6F97      ; Get sprite set
+
+	# Fork: 16 Party chars (lineup, colosseum)
+                C2 20           # REP #$20       ; 16-bit A
+                BF 69 69 C3     # LDA $C36969,X  ; Actor address
+                AA              # TAX            ; Index it
+                E2 20           # SEP #$20       ; 8-bit A
+                7B              # TDC            ; Clear A
+                BD 01 00        # LDA $0001,X    ; Sprite set
+
+                0A           # ASL A          ; double it
+#                0A           # ASL A          ; double it
+                7D 01 00     # ADC $0001,X    ; triple it
+                AA           # TAX            ; to X
+
+                C2 20           # REP #$20       ; 16-bit A
+		BF 00 00 F2	# LDA $F20000,X  ; GFX adr LBs
+#!			.sub?Expanded GFX Pointers
+#		BF 13 F9 CF	# LDA $CFF913,X  ; GFX adr LBs
+		85 E7    	# STA $E7        ; Memorize it
+		BF 02 00 F2	# LDA $F20002,X  ; GFX adr HBs
+		29 FF 00	# AND #$00FF     ; filter high byte
+#!			.sub?Expanded GFX Pointers High Byte
+# 		BF 11 F9 CF	# LDA $CFF911,X  ; GFX adr HBs
+		85 E9    	# STA $E9        ; Memorize it
+
+		5C 03 6D C3     # JML $C36CF7
+#		60           # RTS            ; return
+
+>> Safe sprite loading for Load and Save menus
+++ .sub:? Safe Load : @@ @@
+		20 13 6B  	# JSR $6B13      ; BG3 font GFX
+		20 37 6B  	# JSR $6B37      ; BG1 font GFX
+		20 E8 6B  	# JSR $6BE8      ; Font colors
+#		20 67 6E  	# JSR $6E67      ; Cursor/icon GFX
+		20 82 6E  	# JSR $6E82      ; Portrait GFX
+		20 09 6C  	# JSR $6C09      ; Portrait colors
+		20 AC 18  	# JSR $18AC      ; Move game's SRAM
+		20 E9 6C	# JSR $6CE9	 ; Upload actor sprites ***
+		20 C1 18  	# JSR $18C1      ; Restore SRAM
+		20 67 6E  	# JSR $6E67      ; Cursor/icon GFX
+		20 84 6C  	# JSR $6C84      ; Cursor/icon pals
+		4C 60 6C  	# JMP $6C60      ; Grayscale pal
+		60		# RTS
+
+>> New Invoke Save Menu ($@@@@@@)
+++ .sub:? Invoke Save Menu : @@ @@		
+		A9 13    	# LDA #$13       ; C3/1CA0
+		85 26    	# STA $26        ; Next: Initialize Save menu
+		5C BA 01 C3   	# JML $C301BA    ; Enter menu loop
+
+>> B button in Save Menu ($@@@@@@)
+++ .sub:? Exit Save Menu  : @@ @@
+		20 A9 0E  	# JSR $0EA9      ; Sound: Cursor
+		9C 05 02	# STZ $0205	 
+		A9 FF           # LDA #$FF        ; Exit to "field"
+		85 27    	# STA $27        ; Queue main menu
+		A9 53    	# LDA #$53       ; C3/19FB
+		85 26    	# STA $26        ; Next: Fade-out
+		60      	# RTS
+
+>> Fork: New Leaving Save Menu ($@@@@@@)
+++ .sub:? Leave Save Menu : @@ @@	
+		AD 05 02  	# LDA $0205      ; Exit menu goto?
+		C9 06		# CMP #$06       ; Is Save menu
+		D0 0F		# BNE +0F
+		A9 05		# LDA #$05	 ; C3/FREE
+		8D 00 02	# STA $0200	 ; Next menu: Save Menu
+		22 00 00 C3	# JSL $C30000    ; Call menu
+		9C 00 02  	# STZ $0200      ; Menu: Main
+		4C 1B 00  	# JMP $001B      ; Open main menu
+
+		AD 00 02  	# LDA $0200      ; Menu closed
+		4C 5A 00	# JMP $005A	 ; Now test load menu
+
+>> Intercept: OAM sprite loading ($@@@@@@)
+++ .sub:? Index to OAM sprite : @@ @@ 
+		C2 20		# REP #$20	 ; 16-bit A
+		8A 		# TXA
+		0A 		# ASL 		 ; multiply 2
+		0A 		# ASL 		 ; multiply 4
+		85 E2    	# STA $E2        ; Memorize them
+		E2 20		# SEP #$20	 ; 8-bit A
+		5C 12 13 C3	# JML $C31312	 ; Return to OAM stuff
+
+>> Intercept: OAM Palette compliments ($@@@@@@)
+++ .sub:? Advanced palette compliments : @@ @@
+		BD 49 37  	# LDA $3749,X    ; OAM complements
+#		C9 80		# CMP #$80	 ; + Check Hi-Bit
+		F0 0B    	# BEQ +0B        ; Exit if none
+		A5 E3    	# LDA $E3        ; Tile attributes
+		29 F1    	# AND #$F1       ; Clear palette
+		5D 49 37  	# EOR $3749,X    ; Add complements
+		49 80		# EOR #$80	 ; + Invert Hi-Bit (= no change)
+		85 E3    	# STA $E3        ; Save changes
+		C8      	# INY            ; Index +1
+		60      	# RTS
+
+>> Palette fix ($@@@@@@)
+++ .sub:? Fix compliments for sprites : @@ @@
+		8A		# TXA
+		C2 20    	# REP #$20       ; 16-bit A
+		0A      	# ASL A          ; Double it
+		AA      	# TAX            ; Index it
+		BF 17 E9 D8	# LDA $D8E917,X  ; Anim table ptr
+		99 C9 32  	# STA $32C9,Y    ; Set sprite's
+		8A		# TXA
+		C2 20    	# REP #$20       ; 16-bit A
+		4A      	# LSR A          ; Divide in half
+		AA      	# TAX            ; Index it
+
+		E2 20    	# SEP #$20       ; 8-bit A
+		B9 49 37	# LDA $3749,Y	 ; OAM complements
+		C9 00		# CMP #$00
+		D0 25		# BNE +25	 ; skip if complements already set
+
+		5A		# PHY
+                DA              # PHX
+		A5 66		# LDA $66	 ; Current menu
+		CD 24 02	# CMP $0224	 ; same as last viewed
+		F0 09		# BEQ +09	 ; skip load if so
+		8D 24 02  	# STA $0224      ; Set last viewed
+                20 66 15        # JSR $1566      ; Load save file
+                20 15 69        # JSR $6915      ; Move party info
+                C2 20           # REP #$20       ; 16-bit A
+                FA              # PLX
+		7A		# PLY
+                8A              # TXA
+                29 03 00        # AND #$0003
+                AA              # TAX
+                E2 20           # SEP #$20       ; 8-bit A
+                B5 69           # LDA $69,X      ; Actor in slot
+                AA              # TAX
+                18              # CLC		 ; Prepare Add
+		BD 70 1F	# LDA $1F70,X    ; Load character palette
+		69 04		# ADC #$04	 ; Plus 4
+
+		99 49 37	# STA $3749,Y	 ; store OAM complements
+
+		5C 73 19 C3	# JML $C31973	 ; Jump back 
+
+>> Lineup OAM compliments
+++ .sub:? Lineup OAM compliments : @@ @@
+		AA      	# TAX            ; Index Actor
+                A9 7E           # LDA #$7E       ; Bank: 7E
+                48              # PHA            ; Put on stack
+                AB              # PLB            ; Set DB to 7E
+                18              # CLC		 ; Prepare Add
+                BD 70 1F        # LDA $1F70,X    ; Character Palette
+                69 04           # ADC #$04       ; Plus 4
+                99 49 37        # STA $3749,Y    ; store OAM complement
+		8A		# TXA
+		0A      	# ASL A          ; Actor x2
+		AA      	# TAX            ; Index it
+		5C FC 78 C3	# JML $C378FC	 ; jump back
+
+!	./Menu-Shop.ptxt? Upload Shop Sprites
+!	./Menu-Shop.ptxt? Shop OAM Compliments
+
+>> $$$$/0F6F bytes written to free space 
+?
+
+
+>> Hook routine: sprite upload
+@ C36CF4:	4C # JMP ->
+!			.sub? Get sprite index 
+
+>> Only do 16 sprites
+@ C36D3C:	E0 20 00  	# CPX #$0020     ; 16th sprite?
+
+# lineup
+>> Load pointer to actor's animation table (now using slot id)
+@ C378EB:	4C # -> JMP
+!			.sub? Lineup OAM compliments
+
+# >> Use OAM compliments
+#@ C378B7:
+#		EA
+#		EA EA EA
+#		7B      	# TDC            ; Clear A
+#		99 4B 34  	# STA $344B,Y    ; No use...
+
+#@ C31130:
+#		EA EA EA
+#		9E 49 37  	# STZ $3749,X    ; OAM complements
+#@ C311F0:
+#		EA EA EA
+#		9E 49 37  	# STZ $3749,X    ; OAM complements
+
+
+# >> Save/load menu: Create actor sprites for Save or Load menu
+# @ C31964:	EA EA EA 8A 	# TXA
+
+>> Hook Fork: Leaving Load menu
+@ C30057:	4C # JMP ->
+!		   .sub? Leave Save Menu
+
+>> Menu Exit RAM $0205 = #$06 goto Save menu
+>> Invoke Save menu if allowed
+@ C32EB2:	A9 06    	# LDA #$06       ; Save menu
+		8D 05 02  	# STA $0205      ; Set next menu
+		A9 FF    	# LDA #$FF       ; Null value
+		85 27    	# STA $27        ; Queue menu exit
+		64 26    	# STZ $26        ; Next: Fade-out
+		60		# RTS
+
+>> Save Menu exit
+@ C32551:	4C # JMP ->
+!		   .sub? Exit Save Menu
+
+>> Hook Jump Table: Access requested field menu: Save Menu
+@ C300F0:		    	# $0200 = $05 ; New Invoke Save Menu
+!		.sub? Invoke Save Menu
+
+>> Load non-skin graphics and colors for Save menu
+@ C36A9A:	    	# $0200 = $05 ; Save menu shares GFX with Load Menu
+!		.sub? Safe Load
+>> Load non-skin graphics and colors for Load menu
+@ C36A94:		# $0200 = $02 ; Load menu
+!		.sub? Safe Load
+
+>> Use palette compliments for sprites
+@ C31964:       4C # JMP ->
+!               .sub? Fix compliments for sprites
+
+
+! 	./Menu-Shop.ptxt

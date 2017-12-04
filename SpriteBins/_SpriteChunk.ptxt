@@ -1,0 +1,209 @@
+# Chunk of Sprites
+
+-- .SpritePtrs
+
+++ .SpritePtrs : 	@@ @@ @@ # Terra
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Locke
+!b			01-Locke-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Cyan
+!b			02-Cyan-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Shadow
+!b			03-Shadow-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Edgar
+!b			04-Edgar-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Sabin
+!b			05-Sabin-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Celes
+!b			06-Celes-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Strago
+!b			07-Strago-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Relm
+!b			08-Relm-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Setzer
+!b			09-Setzer-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Mog
+!b			0A-Mog-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Gau
+!b			0B-Gau-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Gogo
+!b			0C-Gogo-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Umaro
+!b			0D-Umaro-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Imperial Soldier
+!b			0E-ImperialSoldier-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Imp
+!b			0F-Imp-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Leo
+!b			10-Leo-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Banon
+!b			11-Banon-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Morphed Terra
+!b			12-MorphedTerra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Mechant by Poco Loco
+!b			13-Merchant-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Ghost by Poco Loco
+!b			14-Ghost-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Kefka by Poco Loco
+!b			15-Kefka-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Ghestal by Poco Loco
+!b			16-Ghestal-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Old Man / Gungho
+			# 17 Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Man / Duane
+			# 18 Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Interceptor by sapprentice
+!b			19-Interceptor-sapprentice.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Maria by Astaroth
+!b			1A-OperaCeles-Astaroth.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Scholar by Poco Loco
+!b			1B-Scholar-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Draco by Poco Loco
+!b			1C-Draco-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Arvis by Poco Loco
+!b			1D-Arvis-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Returner by Poco Loco
+!b			1E-Returner-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Ultros by Poco Loco
+!b			1F-Ultros-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Gau (suit) by Zozma
+!b			20-SuitGau-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Dancer by Poco Loco
+!b			21-Dancer-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Chancellor by Zozma
+!b			22-Chancellor-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Clyde by Unknown
+!b			23-Clyde-Unknown.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Old Woman by Zozma
+!b			24-Granny-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Woman / Elayne by Zozma
+!b			25-Lady2-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Little Boy / Owain by Zozma
+!b			26-Boy-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Little Girl
+			# 27 Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Bird by James White XXXIX
+!b			28-Bird-JamesWhite.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Rachel by Zozma
+!b			29-Rachel-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Katarin by FEOK
+!b			2A-Katarin-FEOK.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Impresiaro
+			# 2B Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Esper Elder
+			# 2C Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Yura
+			# 2D Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Siegfried by Poco Loco
+!b			2E-Siegfried-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Cid by FF Fanatic
+!b			2F-Cid-FFFanatic.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Maduin by Poco Loco
+!b			30-Maduin-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Pirate / Baram by Poco Loco
+!b			31-Pirate-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Vargas by Poco Loco
+!b			32-Vargas-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Wolf Monster
+			# 33 Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Narshe Guard by Poco Loco
+!b			34-NarsheGuard-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Train Conductor
+			# 35 Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Sailor / Shopkeeper
+			# 36 Missing
+!b			00-Terra-Default.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Fairy by Poco Loco
+!b			37-Fairy-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Lone Wolf by Poco Loco
+!b			38-LoneWolf-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Dragon by Poco Loco
+!b			39-Dragon-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Fish by James White XXXIX
+!b			3A-Fish-JamesWhite.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Figaro Guard by Poco Loco
+!b			3B-FigaroGuard-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Daryl by Zozma
+!b			3C-Daryl-Zozma.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Chupon by Poco Loco
+!b			3D-Chupon-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Cultist by Poco Loco
+!b			3E-Cultist-PocoLoco.bin
+
+++ .SpritePtrs : 	@@ @@ @@ # Ramuh
+			# 3F Missing
+!b			00-Terra-Default.bin
+
+
+
+

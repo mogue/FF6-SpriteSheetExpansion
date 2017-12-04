@@ -1,0 +1,35 @@
+#
+#	Final Fantasy VI:
+#	NPC Sprite Sheet Expansion
+#	by m06
+#	thx to B-run and Catone
+#	Sprites from PocoLoco (21), Zozma (7), JamesWhite (2), FF Fanatic, Astaroth, sapprentice
+#
+
+*     200
+* -C00000
+
+>> Free Space: $C3/F091
+@ C3F091:
+!	ASM/Menu.ptxt?     Extra Routines
+
+@ F10000:
+!	ASM/Battle.ptxt?   Extra Routines
+
+@ F20300:
+!	ASM/SpritePalettes.ptxt
+
+@ F20400:
+!	SpriteBins/_SpriteChunk.ptxt
+@ F20000:
+!	SpriteBins/.SpritePtrs
+
+!	ASM/Field.ptxt		: # thx B-run
+!	ASM/Battle.ptxt		: # thx Catone
+!	ASM/Menu.ptxt
+
+
+*  C00000
+*    -200
+
+

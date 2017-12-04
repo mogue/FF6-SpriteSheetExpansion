@@ -1,0 +1,110 @@
+# Shop fix
+
+? Upload Shop Sprites
+>> Upload Shop Sprites ($@@@@@@) 
+++ .sub:? Upload Shop Sprites : @@ @@ @@
+		DA 		# PHX
+
+	        C2 20           # REP #$20       ; 16-bit A
+		98		# TYA
+		29 08 00	# AND #$0008	 ; Odd actor
+		F0 05		# BEQ +05
+		A5 E3		# LDA $E3	 ; Actor Index
+		1A		# INC A		 ; + 1
+		80 02		# BRA +02
+		A5 E3		# LDA $E3	 ; Actor Index
+
+		0A		# ASL A
+		AA		# TAX
+
+                BF 69 69 C3     # LDA $C36969,X  ; Actor address
+                AA              # TAX            ; Index it
+                E2 20           # SEP #$20       ; 8-bit A
+                7B              # TDC            ; Clear A
+                BD 01 00        # LDA $0001,X    ; Sprite set
+
+                0A           # ASL A          ; double it
+#		0A	     # ASL A	      ; multiply by 4
+                7D 01 00     # ADC $0001,X    ; triple it
+                AA           # TAX            ; to X
+
+                C2 20           # REP #$20       ; 16-bit A
+                BF 00 00 F2	# LDA $F20000,X  ; GFX adr LBs
+                85 EB           # STA $EB        ; Memorize it
+                BF 02 00 F2	# LDA $F20002,X  ; GFX adr HBs
+		29 FF 00        # AND #$00FF
+                85 ED           # STA $ED        ; Memorize it
+
+	        C2 20           # REP #$20       ; 16-bit A
+		FA		# PLX
+		68		# PLA
+		65 EB		# ADC $EB
+		85 EB		# STA $EB
+		E2 20		# SEP #$20	 ; 8-bit A
+		A5 ED		# LDA $ED
+		69 00		# ADC #$00
+		85 ED		# STA $ED
+
+                5C D0 6D C3     # JML $C36DD0	 ; Jump back
+
+? Shop OAM Compliments
+++ .sub:? Shop OAM Compliments : @@ @@ @@
+		99 C9 32  	# STA $32C9,Y    ; Set sprite's (Anim table ptr)
+#		99 4B 34  	# STA $344B,Y    ; No use...
+		8A		# TXA
+		4A		# LSR A
+		AA		# TAX
+
+		E2 20    	# SEP #$20       ; 8-bit A
+		18              # CLC            ; Prepare Add
+                BD 70 1F        # LDA $1F70,X    ; Character Palette
+                69 04           # ADC #$04       ; Plus 4
+                99 49 37        # STA $3749,Y    ; store OAM complement
+
+		5C CA C0 C3	# JML $C3C0C8	 ; Jump back
+? 
+
+
+>> Upload shop sprites
+@ C36D99:	5C # JML ->
+!		.sub? Upload Shop Sprites
+
+>> Shop: Display Sprites with correct palette
+@ C3C0C5:	5C # JML ->
+!		.sub? Shop OAM Compliments
+
+@ C36E47:
+ 	C0 03    	# ; 1,1 (hands down)
+	E0 03    	# ; 1,2 (hands down)
+	00 05    	# ; 2,1 (hands down)
+	20 05    	# ; 2,2 (hands down)
+	40 05    	# ; 3,1 (hands down)
+	60 05    	# ; 3,2 (hands down)
+	FF FF    	# ; 4,1 (hands down)
+	FF FF    	# ; 4,2 (hands down)
+	C0 03    	# ; 1,1 (hands up)
+	60 06    	# ; 1,2 (hands up)
+	80 06    	# ; 2,1 (hands up)
+	A0 06    	# ; 2,2 (hands up)
+	C0 06    	# ; 3,1 (hands up)
+	E0 06    	# ; 3,2 (hands up)
+	FF FF    	# ; 4,1 (hands up)
+	FF FF    	# ; 4,2 (hands up)
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+#		FF FF
+
+

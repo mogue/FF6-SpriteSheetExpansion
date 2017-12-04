@@ -1,0 +1,137 @@
+# Based on B-run's post: Expanding NPC Sprite sheets
+# https://www.ff6hacking.com/forums/showthread.php?tid=2329
+
+>> $C0 Field : Spritesheet location pointers
+@ C0D0F2:
+	00 04 # Terra
+        A0 1A # Locke
+        40 31 # Cyan
+        E0 47 # Shadow
+        80 5E # Edgar
+        20 75 # Sabin
+        C0 8B # Celes
+        60 A2 # Strago
+        00 B9 # Relm
+        A0 CF # Setzer
+        40 E6 # Mog
+        E0 FC # Gau
+        80 13 # Gogo
+        20 2A # Umaro
+        C0 40 # Imperial Soldier
+        60 57 # Imp
+        00 6E # Leo
+        A0 84 # Banon
+        40 9B # Morphed Terra
+        E0 B1 # Mechant by Poco Loco
+        80 C8 # Ghost by Poco Loco
+        20 DF # Kefka by Poco Loco
+        C0 F5 # Ghestal by Poco Loco
+        60 0C # Old Man / Gungho
+        00 23 # Man / Duane
+        A0 39 # Interceptor by sapprentice
+        40 50 # Maria by Astaroth
+        E0 66 # Scholar by Poco Loco
+        80 7D # Draco by Poco Loco
+        20 94 # Arvis by Poco Loco
+        C0 AA # Returner by Poco Loco
+        60 C1 # Ultros by Poco Loco
+        00 D8 # Gau (suit) by Zozma
+        A0 EE # Dancer by Poco Loco
+        40 05 # Chancellor by Zozma
+        E0 1B # Clyde by Unknown
+        80 32 # Old Woman by Zozma
+        20 49 # Woman / Elayne by Zozma
+        C0 5F # Little Boy / Owain by Zozma
+        60 76 # Little Girl
+        00 8D # Bird by James White XXXIX
+        A0 A3 # Rachel by Zozma
+        40 BA # Katarin by FEOK
+        E0 D0 # Impresiaro
+        80 E7 # Esper Elder
+        20 FE # Yura
+        C0 14 # Siegfried by Poco Loco
+        60 2B # Cid by FF Fanatic
+        00 42 # Maduin by Poco Loco
+        A0 58 # Pirate / Baram by Poco Loco
+        40 6F # Vargas by Poco Loco
+        E0 85 # Wolf Monster
+        80 9C # Narshe Guard by Poco Loco
+        20 B3 # Train Conductor
+        C0 C9 # Sailor / Shopkeeper
+        60 E0 # Fairy by Poco Loco
+        00 F7 # Lone Wolf by Poco Loco
+        A0 0D # Dragon by Poco Loco
+        40 24 # Fish by James White XXXIX
+        E0 3A # Figaro Guard by Poco Loco
+        80 51 # Daryl by Zozma
+        20 68 # Chupon by Poco Loco
+        C0 7E # Cultist by Poco Loco
+        60 95 # Ramuh
+
+>> $C0 Field : Spritesheet bank pointers and bytes to copy per tile
+@ C0D23C:
+	F2 20 # Terra
+        F2 20 # Locke
+        F2 20 # Cyan
+        F2 20 # Shadow
+        F2 20 # Edgar
+        F2 20 # Sabin
+        F2 20 # Celes
+        F2 20 # Strago
+        F2 20 # Relm
+        F2 20 # Setzer
+        F2 20 # Mog
+        F2 20 # Gau
+        F3 20 # Gogo
+        F3 20 # Umaro
+        F3 20 # Imperial Soldier
+        F3 20 # Imp
+        F3 20 # Leo
+        F3 20 # Banon
+        F3 20 # Morphed Terra
+        F3 20 # Mechant by Poco Loco
+        F3 20 # Ghost by Poco Loco
+        F3 20 # Kefka by Poco Loco
+        F3 20 # Ghestal by Poco Loco
+        F4 20 # Old Man / Gungho
+        F4 20 # Man / Duane
+        F4 20 # Interceptor by sapprentice
+        F4 20 # Maria by Astaroth
+        F4 20 # Scholar by Poco Loco
+        F4 20 # Draco by Poco Loco
+        F4 20 # Arvis by Poco Loco
+        F4 20 # Returner by Poco Loco
+        F4 20 # Ultros by Poco Loco
+        F4 20 # Gau (suit) by Zozma
+        F4 20 # Dancer by Poco Loco
+        F5 20 # Chancellor by Zozma
+        F5 20 # Clyde by Unknown
+        F5 20 # Old Woman by Zozma
+        F5 20 # Woman / Elayne by Zozma
+        F5 20 # Little Boy / Owain by Zozma
+        F5 20 # Little Girl
+        F5 20 # Bird by James White XXXIX
+        F5 20 # Rachel by Zozma
+        F5 20 # Katarin by FEOK
+        F5 20 # Impresiaro
+        F5 20 # Esper Elder
+        F5 20 # Yura
+        F6 20 # Siegfried by Poco Loco
+        F6 20 # Cid by FF Fanatic
+        F6 20 # Maduin by Poco Loco
+        F6 20 # Pirate / Baram by Poco Loco
+        F6 20 # Vargas by Poco Loco
+        F6 20 # Wolf Monster
+        F6 20 # Narshe Guard by Poco Loco
+        F6 20 # Train Conductor
+        F6 20 # Sailor / Shopkeeper
+        F6 20 # Fairy by Poco Loco
+        F6 20 # Lone Wolf by Poco Loco
+        F7 20 # Dragon by Poco Loco
+        F7 20 # Fish by James White XXXIX
+        F7 20 # Figaro Guard by Poco Loco
+        F7 20 # Daryl by Zozma
+        F7 20 # Chupon by Poco Loco
+        F7 20 # Cultist by Poco Loco
+        F7 20 # Ramuh
+

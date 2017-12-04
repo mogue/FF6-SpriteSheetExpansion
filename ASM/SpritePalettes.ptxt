@@ -1,0 +1,67 @@
+# Palette list for battle
+
+	02 # $00 Terra
+	01 # $01 Locke
+	04 # $02 Cyan
+	04 # $03 Shadow
+	00 # $04 Edgar
+	00 # $05 Sabin
+	00 # $06 Celes
+	03 # $07 Strago
+	03 # $08 Relm
+	04 # $09 Setzer
+	05 # $0A Mog
+	03 # $0B Gau
+	05 # $0C Gogo
+	05 # $0D Umaro
+	01 # $0E Imperial Soldier
+	00 # $0F Imp
+	00 # $10 Leo
+	03 # $11 Banon
+	06 # $12 Morphed Terra
+	01 # $13 Merchant
+	00 # $14 Ghost
+	03 # $15 Kefka
+	03 # $16 Gestahl
+	00 # $17 Gungho
+	01 # $18 Duane / Young Man
+	04 # $19 Interceptor
+	00 # $1A Celes in Dress
+	01 # $1B Scholar
+	04 # $1C Draco
+	04 # $1D Arvis
+	01 # $1E Returner
+	05 # $1F Ultros
+	03 # $20 Dressed-Up Gau
+	02 # $21 Dancer
+	02 # $22 Figaro Chancellor
+	01 # $23 Clyde
+	04 # $24 Old Woman
+	01 # $25 Young Woman / Elayne
+	01 # $26 Young Boy / Owain
+	01 # $27 Young Girl
+	04 # $28 Bird
+	00 # $29 Rachel
+	02 # $2A Katarin
+	04 # $2B Impresario
+	04 # $2C Esper Elder
+	04 # $2D Yura?
+	04 # $2E Sigfried
+	03 # $2F Cid
+	04 # $30 Maduin
+	03 # $31 Baram / Pirate
+	04 # $32 Vargas
+	02 # $33 Wolf Monster
+	01 # $34 Narshe Guard
+	04 # $35 Train Conductor
+	01 # $36 Sailor / Shopkeeper
+	01 # $37 Fairy
+	04 # $38 Lone Wolf
+	01 # $39 Dragon
+	04 # $3A Fish
+	02 # $3B Figaro Guard
+	02 # $3C Daryl
+	05 # $3D Chupon
+	02 # $3E Cultist / Fanatic
+	04 # $3F Ramuh
+
