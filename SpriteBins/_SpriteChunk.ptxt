@@ -73,11 +73,11 @@
 
 ++ .SpritePtrs : 	@@ @@ @@ # Old Man / Gungho
 			# 17 Missing
-!b			00-Terra-Default.bin
+!b			17-OldMan-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Man / Duane
 			# 18 Missing
-!b			00-Terra-Default.bin
+!b			18-Duane-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Interceptor by sapprentice
 !b			19-Interceptor-sapprentice.bin
@@ -123,7 +123,7 @@
 
 ++ .SpritePtrs : 	@@ @@ @@ # Little Girl
 			# 27 Missing
-!b			00-Terra-Default.bin
+!b			27-LittleGirl-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Bird by James White XXXIX
 !b			28-Bird-JamesWhite.bin
@@ -136,15 +136,15 @@
 
 ++ .SpritePtrs : 	@@ @@ @@ # Impresiaro
 			# 2B Missing
-!b			00-Terra-Default.bin
+!b			2B-Impresiaro-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Esper Elder
 			# 2C Missing
-!b			00-Terra-Default.bin
+!b			2C-EsperElder-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Yura
 			# 2D Missing
-!b			00-Terra-Default.bin
+!b			2D-Yura-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Siegfried by Poco Loco
 !b			2E-Siegfried-PocoLoco.bin
@@ -163,18 +163,17 @@
 
 ++ .SpritePtrs : 	@@ @@ @@ # Wolf Monster
 			# 33 Missing
-!b			00-Terra-Default.bin
+!b			33-WolfMonster-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Narshe Guard by Poco Loco
 !b			34-NarsheGuard-PocoLoco.bin
 
-++ .SpritePtrs : 	@@ @@ @@ # Train Conductor
-			# 35 Missing
-!b			00-Terra-Default.bin
+++ .SpritePtrs : 	@@ @@ @@ # Train Conductor by Zozma
+!b			35-TrainConductor-Zozma.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Sailor / Shopkeeper
 			# 36 Missing
-!b			00-Terra-Default.bin
+!b			36-Sailor-incomplete.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Fairy by Poco Loco
 !b			37-Fairy-PocoLoco.bin

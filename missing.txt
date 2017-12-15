@@ -7,6 +7,5 @@ the following sprites are incomplete
 2C Esper Elder
 2D Yura
 33 Wolf Monster
-35 Train Conductor
 36 Sailor / Shopkeeper
 3F Ramuh
