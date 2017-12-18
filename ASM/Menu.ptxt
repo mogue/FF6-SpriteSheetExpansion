@@ -6,14 +6,57 @@
 
 -- .sub
 
+>> Make Party Info for SRAM screens. ($@@@@@@)
+++ .sub:? Make party info: @@ @@
+#		22 00 CA D4	# JSL $D4CA00    ; Clear all info
+		7B      	# TDC            ; Clear A
+		AA      	# TAX            ; 1st: Terra
+		9B      	# TXY            ; ...
+		A5 66		# LDA $66	 ; Save file #
+                0A              # ASL A          ; double it
+		AA		# TAX
+		C2 20    	# REP #$20       ; 16-bit A
+		BF 5E 15 C3	# LDA $C3155E,X  ; SRAM pointers
+		AA      	# TAX            ; 1st: Terra
+		7B      	# TDC            ; Clear A
+		E2 20    	# SEP #$20       ; 8-bit A
+		BF 6D 64 30	# LDA $30646D,X  ; Active party for save slot
+		85 E1		# STA $E1		
+
+		BF 50 62 30  	# LDA $306250,X  ; Party info
+		29 40    	# AND #$40       ; Object's off?
+		F0 1F    	# BEQ +!F        ; Skip if so
+		BF 50 62 30 	# LDA $306250,X  ; Party info
+		29 07    	# AND #$07       ; Get party
+		C5 E1	  	# CMP $E1        ; Active party?
+		D0 15    	# BNE +15        ; Skip if not
+		BF 50 62 30  	# LDA $306250,X  ; Party info
+		48      	# PHA            ; Memorize it
+		29 18    	# AND #$18       ; Roster slot
+		85 E0    	# STA $E0        ; Memorize it
+		4A      	# LSR A          ; Put in b2-b3
+		4A      	# LSR A          ; Put in b1-b2
+		4A      	# LSR A          ; Now 0-3
+		A8      	# TAY            ; Index it
+		68      	# PLA            ; Party info
+		99 75 00  	# STA $0075,Y    ; Set member's
+		8A      	# TXA            ; Actor slot
+		99 69 00  	# STA $0069,Y    ; Set member's
+		E8      	# INX            ; Actor slot +1
+		8A      	# TXA            ; Actor slot
+		C9 10		# CMP #$10	 ; Dones 16 chars?
+		D0 D3    	# BNE -2B        ; Loop if not
+
+		60      	# RTS
+
 >> Dynamic Sprite Index ($@@@@@@)
 ++ .sub:? Get sprite index: @@ @@
-               E2 20          # SEP #$20       ; 8-bit A
+                E2 20           # SEP #$20       ; 8-bit A
 		AD 00 02 	# LDA $0200      ; Menu to open
 		C9 05		# CMP #$05	 ; Save menu?
 		F0 04		# BEQ +04	 ; 
 		C9 02    	# CMP #$02       ; Load menu?
-		D0 1F		# BNE +1F	 ; skip if not
+		D0 46		# BNE +46	 ; skip if not
 
 	# Fork: 3x4 Party chars (load, save)	
 		DA 		# PHX
@@ -22,10 +65,9 @@
 		4A 4A 		# LSR A		 ; divide by 4 (four members)
 		1A		# INC A		 ; File: 1-3
 		29 03		# AND #$03
-#		A9 02    	# LDA #$02       ; File: 2
 		85 66    	# STA $66        ; ...
-		20 66 15  	# JSR $1566      ; Load save file
-		20 15 69  	# JSR $6915      ; Move party info
+		20 # JSR ->
+!			.sub? Make party info
 
                 C2 20           # REP #$20       ; 16-bit A
 		FA		# PLX		
@@ -37,34 +79,50 @@
 		B5 69    	# LDA $69,X      ; Actor in slot
 		0A 		# ASL A 	 ; double it
 		AA		# TAX
-#		20 97 6F  	# JSR $6F97      ; Get sprite set
+		C2 20           # REP #$20       ; 16-bit A
+                BF 69 69 C3     # LDA $C36969,X  ; Actor address
+		18		# CLC
+		E9 FF 15	# SBC #$15FF
+                AA              # TAX            ; Index it
+                E2 20           # SEP #$20       ; 8-bit A
+                7B              # TDC            ; Clear A
+		
+		C6 66		# DEC $66
+		F0 0A		# BEQ +0A
+		C2 20           # REP #$20       ; 16-bit A
+		8A		# TXA
+		18		# CLC
+		69 00 0A	# ADC #$0A00	 ; next save slot
+		AA		# TAX
+		80 F2		# BRA -0B	 ; loop
+
+                7B              # TDC            ; Clear A
+                E2 20           # SEP #$20       ; 8-bit A
+                BF 01 60 30     # LDA $306001,X  ; Sprite set	
+                0A              # ASL A          ; double it
+                7F 01 60 30     # ADC $306001,X  ; triple it
+		80 11		# BRA +11
 
 	# Fork: 16 Party chars (lineup, colosseum)
                 C2 20           # REP #$20       ; 16-bit A
                 BF 69 69 C3     # LDA $C36969,X  ; Actor address
                 AA              # TAX            ; Index it
-                E2 20           # SEP #$20       ; 8-bit A
                 7B              # TDC            ; Clear A
+                E2 20           # SEP #$20       ; 8-bit A
                 BD 01 00        # LDA $0001,X    ; Sprite set
+                0A              # ASL A          ; double it
+                7D 01 00        # ADC $0001,X    ; triple it
 
-                0A           # ASL A          ; double it
-#                0A           # ASL A          ; double it
-                7D 01 00     # ADC $0001,X    ; triple it
-                AA           # TAX            ; to X
+                AA              # TAX            ; to X
 
                 C2 20           # REP #$20       ; 16-bit A
 		BF 00 00 F2	# LDA $F20000,X  ; GFX adr LBs
-#!			.sub?Expanded GFX Pointers
-#		BF 13 F9 CF	# LDA $CFF913,X  ; GFX adr LBs
 		85 E7    	# STA $E7        ; Memorize it
 		BF 02 00 F2	# LDA $F20002,X  ; GFX adr HBs
 		29 FF 00	# AND #$00FF     ; filter high byte
-#!			.sub?Expanded GFX Pointers High Byte
-# 		BF 11 F9 CF	# LDA $CFF911,X  ; GFX adr HBs
 		85 E9    	# STA $E9        ; Memorize it
 
 		5C 03 6D C3     # JML $C36CF7
-#		60           # RTS            ; return
 
 >> Safe sprite loading for Load and Save menus
 ++ .sub:? Safe Load : @@ @@
@@ -74,16 +132,19 @@
 #		20 67 6E  	# JSR $6E67      ; Cursor/icon GFX
 		20 82 6E  	# JSR $6E82      ; Portrait GFX
 		20 09 6C  	# JSR $6C09      ; Portrait colors
-		20 AC 18  	# JSR $18AC      ; Move game's SRAM
+#		20 AC 18  	# JSR $18AC      ; Move game's SRAM
 		20 E9 6C	# JSR $6CE9	 ; Upload actor sprites ***
-		20 C1 18  	# JSR $18C1      ; Restore SRAM
+#		20 C1 18  	# JSR $18C1      ; Restore SRAM
 		20 67 6E  	# JSR $6E67      ; Cursor/icon GFX
 		20 84 6C  	# JSR $6C84      ; Cursor/icon pals
 		4C 60 6C  	# JMP $6C60      ; Grayscale pal
 		60		# RTS
 
 >> New Invoke Save Menu ($@@@@@@)
-++ .sub:? Invoke Save Menu : @@ @@		
+++ .sub:? Invoke Save Menu : @@ @@
+		A9 02    	# LDA #$02       ; Main cursor: On
+		85 46    	# STA $46        ; Bar/Blinker: Off
+
 		A9 13    	# LDA #$13       ; C3/1CA0
 		85 26    	# STA $26        ; Next: Initialize Save menu
 		5C BA 01 C3   	# JML $C301BA    ; Enter menu loop
@@ -92,7 +153,7 @@
 ++ .sub:? Exit Save Menu  : @@ @@
 		20 A9 0E  	# JSR $0EA9      ; Sound: Cursor
 		9C 05 02	# STZ $0205	 
-		A9 FF           # LDA #$FF        ; Exit to "field"
+		A9 FF           # LDA #$FF       ; Exit to "field"
 		85 27    	# STA $27        ; Queue main menu
 		A9 53    	# LDA #$53       ; C3/19FB
 		85 26    	# STA $26        ; Next: Fade-out
@@ -151,27 +212,41 @@
 		E2 20    	# SEP #$20       ; 8-bit A
 		B9 49 37	# LDA $3749,Y	 ; OAM complements
 		C9 00		# CMP #$00
-		D0 25		# BNE +25	 ; skip if complements already set
+		D0 36		# BNE +36	 ; skip if complements already set
 
 		5A		# PHY
                 DA              # PHX
 		A5 66		# LDA $66	 ; Current menu
 		CD 24 02	# CMP $0224	 ; same as last viewed
-		F0 09		# BEQ +09	 ; skip load if so
+		F0 06		# BEQ +06	 ; skip load if so
 		8D 24 02  	# STA $0224      ; Set last viewed
-                20 66 15        # JSR $1566      ; Load save file
-                20 15 69        # JSR $6915      ; Move party info
+		20 # JSR ->
+!			.sub? Make party info
                 C2 20           # REP #$20       ; 16-bit A
                 FA              # PLX
 		7A		# PLY
                 8A              # TXA
-                29 03 00        # AND #$0003
+                29 03 00        # AND #$0003	 ; Actor 0-3
                 AA              # TAX
                 E2 20           # SEP #$20       ; 8-bit A
                 B5 69           # LDA $69,X      ; Actor in slot
+
+		48		# PHA
+		A5 66		# LDA $66	 ; Current save slot index
+		AA		# TAX
+		68		# PLA
+
+		CA              # DEX
+                F0 08           # BEQ +08
+                C2 20           # REP #$20       ; 16-bit A
+                18              # CLC
+                69 00 0A        # ADC #$0A00     ; next save slot
+                80 F5           # BRA -0B        ; loop
+
                 AA              # TAX
+                E2 20           # SEP #$20       ; 8-bit A
                 18              # CLC		 ; Prepare Add
-		BD 70 1F	# LDA $1F70,X    ; Load character palette
+		BF 70 69 30	# LDA $306970,X  ; Load character palette
 		69 04		# ADC #$04	 ; Plus 4
 
 		99 49 37	# STA $3749,Y	 ; store OAM complements
@@ -212,24 +287,6 @@
 @ C378EB:	4C # -> JMP
 !			.sub? Lineup OAM compliments
 
-# >> Use OAM compliments
-#@ C378B7:
-#		EA
-#		EA EA EA
-#		7B      	# TDC            ; Clear A
-#		99 4B 34  	# STA $344B,Y    ; No use...
-
-#@ C31130:
-#		EA EA EA
-#		9E 49 37  	# STZ $3749,X    ; OAM complements
-#@ C311F0:
-#		EA EA EA
-#		9E 49 37  	# STZ $3749,X    ; OAM complements
-
-
-# >> Save/load menu: Create actor sprites for Save or Load menu
-# @ C31964:	EA EA EA 8A 	# TXA
-
 >> Hook Fork: Leaving Load menu
 @ C30057:	4C # JMP ->
 !		   .sub? Leave Save Menu
@@ -253,10 +310,12 @@
 
 >> Load non-skin graphics and colors for Save menu
 @ C36A9A:	    	# $0200 = $05 ; Save menu shares GFX with Load Menu
-!		.sub? Safe Load
+		E9 6A
+#!		.sub? Safe Load
 >> Load non-skin graphics and colors for Load menu
 @ C36A94:		# $0200 = $02 ; Load menu
-!		.sub? Safe Load
+		E9 6A
+#!		.sub? Safe Load
 
 >> Use palette compliments for sprites
 @ C31964:       4C # JMP ->
