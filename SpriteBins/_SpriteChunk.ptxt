@@ -134,9 +134,8 @@
 ++ .SpritePtrs : 	@@ @@ @@ # Katarin by FEOK
 !b			2A-Katarin-FEOK.bin
 
-++ .SpritePtrs : 	@@ @@ @@ # Impresiaro
-			# 2B Missing
-!b			2B-Impresiaro-incomplete.bin
+++ .SpritePtrs : 	@@ @@ @@ # Impressiaro by Lone Red Mage
+!b			2B-Impressiaro-LoneRedMage.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Esper Elder
 			# 2C Missing

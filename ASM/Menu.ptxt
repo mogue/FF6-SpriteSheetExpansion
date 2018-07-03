@@ -124,22 +124,6 @@
 
 		5C 03 6D C3     # JML $C36CF7
 
->> Safe sprite loading for Load and Save menus
-++ .sub:? Safe Load : @@ @@
-		20 13 6B  	# JSR $6B13      ; BG3 font GFX
-		20 37 6B  	# JSR $6B37      ; BG1 font GFX
-		20 E8 6B  	# JSR $6BE8      ; Font colors
-#		20 67 6E  	# JSR $6E67      ; Cursor/icon GFX
-		20 82 6E  	# JSR $6E82      ; Portrait GFX
-		20 09 6C  	# JSR $6C09      ; Portrait colors
-#		20 AC 18  	# JSR $18AC      ; Move game's SRAM
-		20 E9 6C	# JSR $6CE9	 ; Upload actor sprites ***
-#		20 C1 18  	# JSR $18C1      ; Restore SRAM
-		20 67 6E  	# JSR $6E67      ; Cursor/icon GFX
-		20 84 6C  	# JSR $6C84      ; Cursor/icon pals
-		4C 60 6C  	# JMP $6C60      ; Grayscale pal
-		60		# RTS
-
 >> New Invoke Save Menu ($@@@@@@)
 ++ .sub:? Invoke Save Menu : @@ @@
 		A9 02    	# LDA #$02       ; Main cursor: On
@@ -291,6 +275,9 @@
 @ C30057:	4C # JMP ->
 !		   .sub? Leave Save Menu
 
+>> Save confirmation fix
+@ C325BB:	A9 13    	# LDA #$13       ; C3/1CA0
+
 >> Menu Exit RAM $0205 = #$06 goto Save menu
 >> Invoke Save menu if allowed
 @ C32EB2:	A9 06    	# LDA #$06       ; Save menu
@@ -311,11 +298,9 @@
 >> Load non-skin graphics and colors for Save menu
 @ C36A9A:	    	# $0200 = $05 ; Save menu shares GFX with Load Menu
 		E9 6A
-#!		.sub? Safe Load
 >> Load non-skin graphics and colors for Load menu
 @ C36A94:		# $0200 = $02 ; Load menu
 		E9 6A
-#!		.sub? Safe Load
 
 >> Use palette compliments for sprites
 @ C31964:       4C # JMP ->
