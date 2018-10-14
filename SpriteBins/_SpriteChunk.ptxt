@@ -21,7 +21,8 @@
 !b			05-Sabin-Default.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Celes
-!b			06-Celes-Default.bin
+#!b			06-Celes-Default.bin
+!b			13-Merchant-PocoLoco.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Strago
 !b			07-Strago-Default.bin
