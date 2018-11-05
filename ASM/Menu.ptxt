@@ -50,7 +50,11 @@
 		60      	# RTS
 
 >> Dynamic Sprite Index ($@@@@@@)
-++ .sub:? Get sprite index: @@ @@
+++ .sub:? Get sprite index: @@ @@ @@
+		C2 20    	# REP #$20       ; 16-bit A
+		BF E5 F8 CF	# LDA $CFF8E5,X  ; VRAM pointer
+		85 F3    	# STA $F3        ; Memorize it
+
                 E2 20           # SEP #$20       ; 8-bit A
 		AD 00 02 	# LDA $0200      ; Menu to open
 		C9 05		# CMP #$05	 ; Save menu?
@@ -125,7 +129,7 @@
 		5C 03 6D C3     # JML $C36CF7
 
 >> New Invoke Save Menu ($@@@@@@)
-++ .sub:? Invoke Save Menu : @@ @@
+++ .sub:? Invoke Save Menu : @@ @@ @@
 		A9 02    	# LDA #$02       ; Main cursor: On
 		85 46    	# STA $46        ; Bar/Blinker: Off
 
@@ -133,29 +137,39 @@
 		85 26    	# STA $26        ; Next: Initialize Save menu
 		5C BA 01 C3   	# JML $C301BA    ; Enter menu loop
 
+>> Play cursor sound (@@@@@@)
+++ .sub:? Play cursor sound : @@ @@
+		A9 21    	# LDA #$21       ; APU command
+		85 AE    	# STA $AE        ; Prevent repeat
+		8F 40 21 00	# STA $002140    ; Set I/O port 0
+		60      	# RTS
+
 >> B button in Save Menu ($@@@@@@)
-++ .sub:? Exit Save Menu  : @@ @@
-		20 A9 0E  	# JSR $0EA9      ; Sound: Cursor
+++ .sub:? Exit Save Menu  : @@ @@ @@
+		20 # A9 0E  	# JSR $0EA9      ; Sound: Cursor
+!		   .sub ? Play cursor sound 
 		9C 05 02	# STZ $0205	 
 		A9 FF           # LDA #$FF       ; Exit to "field"
 		85 27    	# STA $27        ; Queue main menu
 		A9 53    	# LDA #$53       ; C3/19FB
 		85 26    	# STA $26        ; Next: Fade-out
-		60      	# RTS
+		5C 5C 25 C3	# JML $C3/255C	 ; RTS
+#		60      	# RTS
 
 >> Fork: New Leaving Save Menu ($@@@@@@)
-++ .sub:? Leave Save Menu : @@ @@	
+++ .sub:? Leave Save Menu : @@ @@ @@	
 		AD 05 02  	# LDA $0205      ; Exit menu goto?
 		C9 06		# CMP #$06       ; Is Save menu
-		D0 0F		# BNE +0F
+		D0 10		# BNE +10
 		A9 05		# LDA #$05	 ; C3/FREE
 		8D 00 02	# STA $0200	 ; Next menu: Save Menu
 		22 00 00 C3	# JSL $C30000    ; Call menu
 		9C 00 02  	# STZ $0200      ; Menu: Main
-		4C 1B 00  	# JMP $001B      ; Open main menu
+		5C 1B 00 C3 	# JML $001B      ; Open main menu
 
 		AD 00 02  	# LDA $0200      ; Menu closed
-		4C 5A 00	# JMP $005A	 ; Now test load menu
+		C9 02    	# CMP #$02       ; Load menu?
+		5C 5C 00 C3	# JML $005A	 ; Now test load menu
 
 >> Intercept: OAM sprite loading ($@@@@@@)
 ++ .sub:? Index to OAM sprite : @@ @@ 
@@ -181,7 +195,7 @@
 		60      	# RTS
 
 >> Palette fix ($@@@@@@)
-++ .sub:? Fix compliments for sprites : @@ @@
+++ .sub:? Fix compliments for sprites : @@ @@ @@
 		8A		# TXA
 		C2 20    	# REP #$20       ; 16-bit A
 		0A      	# ASL A          ; Double it
@@ -238,7 +252,7 @@
 		5C 73 19 C3	# JML $C31973	 ; Jump back 
 
 >> Lineup OAM compliments
-++ .sub:? Lineup OAM compliments : @@ @@
+++ .sub:? Lineup OAM compliments : @@ @@ @@
 		AA      	# TAX            ; Index Actor
                 A9 7E           # LDA #$7E       ; Bank: 7E
                 48              # PHA            ; Put on stack
@@ -260,19 +274,20 @@
 
 
 >> Hook routine: sprite upload
-@ C36CF4:	4C # JMP ->
-!			.sub? Get sprite index 
+@ C36CEC:	5C # JML ->
+!		   .sub? Get sprite index 
+		EA EA EA EA EA
 
 >> Only do 16 sprites
 @ C36D3C:	E0 20 00  	# CPX #$0020     ; 16th sprite?
 
 # lineup
 >> Load pointer to actor's animation table (now using slot id)
-@ C378EB:	4C # -> JMP
-!			.sub? Lineup OAM compliments
+@ C378EB:	5C # JML ->
+!		   .sub? Lineup OAM compliments
 
 >> Hook Fork: Leaving Load menu
-@ C30057:	4C # JMP ->
+@ C30057:	5C # JML ->
 !		   .sub? Leave Save Menu
 
 >> Save confirmation fix
@@ -288,12 +303,15 @@
 		60		# RTS
 
 >> Save Menu exit
-@ C32551:	4C # JMP ->
+@ C32551:	5C # JML ->
 !		   .sub? Exit Save Menu
 
 >> Hook Jump Table: Access requested field menu: Save Menu
-@ C300F0:		    	# $0200 = $05 ; New Invoke Save Menu
-!		.sub? Invoke Save Menu
+#@ C300F0:		    	# $0200 = $05 ; New Invoke Save Menu
+#!		.sub? Invoke Save Menu
+@ C3013D:	5C # JML ->
+!		   .sub? Invoke Save Menu
+
 
 >> Load non-skin graphics and colors for Save menu
 @ C36A9A:	    	# $0200 = $05 ; Save menu shares GFX with Load Menu
@@ -303,8 +321,8 @@
 		E9 6A
 
 >> Use palette compliments for sprites
-@ C31964:       4C # JMP ->
-!               .sub? Fix compliments for sprites
+@ C31964:       5C # JML ->
+!                  .sub? Fix compliments for sprites
 
 
 ! 	./Menu-Shop.ptxt

@@ -9,12 +9,9 @@
 *     200
 * -C00000
 
->> Free Space: $C3/F091
-@ C3F091:
-!	ASM/Menu.ptxt?     Extra Routines
-
 @ F10000:
 !	ASM/Battle.ptxt?   Extra Routines
+!	ASM/Menu.ptxt?     Extra Routines
 
 @ F20300:
 !	ASM/SpritePalettes.ptxt
@@ -24,9 +21,10 @@
 @ F20000:
 !	SpriteBins/.SpritePtrs
 
-!	ASM/Field.ptxt		: # thx B-run
-!	ASM/Battle.ptxt		: # thx Catone
-!	ASM/Menu.ptxt
+# Hooks and changes in original code
+!	ASM/Field.ptxt		: # $C0 thx B-run
+!	ASM/Battle.ptxt		: # $C1 thx Catone
+!	ASM/Menu.ptxt		: # $C3 by m06
 
 
 *  C00000
