@@ -23,18 +23,21 @@
 
 >> Expanding Sprites Bank C1 (Sprite Referance)
 # @ C13D66:
-@ C13D63:	BF 02 00 F2	# LDA $F20002,X	; Load High Byte of Table 40/0002 	 	 
+@ C13D63:	
+		BF 02 00 F2	# LDA $F20002,X	; Load High Byte of Table 40/0002 	 	 
 		85 12		# STA $12	 	 	 	 	 	 
 		C2 20		# REP #$20	 	 	 	 	 	 
 		BF 00 00 F2	# LDA $F20000,X 	; Load List from 40/0000
 
 >> Expanding Sprites Bank C1 (Palette Referance)
 # @ C13E20:
-@ C13E1D:	BF 00 03 F2	# LDA $F20400,X	; Pull Palette ID from table in C2 for Sprite X)
+@ C13E1D:	
+		BF 00 03 F2	# LDA $F20400,X	; Pull Palette ID from table in C2 for Sprite X)
 
 >> Expanding Sprites Bank C1 (Battle Intro Adjust)
 # @ C1FEEA:
-@ C1FEFD:	22 		# JSL ->  		; (Jump to New Code to account for new sprites)
+@ C1FEFD:	
+		22 		# JSL ->  		; (Jump to New Code to account for new sprites)
 !			.sub? Battle Intro Adjust
  		EA	 	# NOP	 
 		0A	 	# ASL A	 

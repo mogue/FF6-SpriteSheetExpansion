@@ -4,8 +4,6 @@
 
 ? Extra Routines
 
--- .sub
-
 >> Make Party Info for SRAM screens. ($@@@@@@)
 ++ .sub:? Make party info: @@ @@
 #		22 00 CA D4	# JSL $D4CA00    ; Clear all info
