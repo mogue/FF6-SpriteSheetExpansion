@@ -21,8 +21,7 @@
 !b			05-Sabin-Default.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Celes
-#!b			06-Celes-Default.bin
-!b			13-Merchant-PocoLoco.bin
+!b			06-Celes-Default.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Strago
 !b			07-Strago-Default.bin
@@ -142,9 +141,9 @@
 			# 2C Missing
 !b			2C-EsperElder-incomplete.bin
 
-++ .SpritePtrs : 	@@ @@ @@ # Yura
-			# 2D Missing
-!b			2D-Yura-incomplete.bin
+++ .SpritePtrs : 	@@ @@ @@ # Yura by CtrlxZ
+#!b			2D-Yura-incomplete.bin
+!b			2D-Yura-CtrlxZ.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Siegfried by Poco Loco
 !b			2E-Siegfried-PocoLoco.bin
@@ -161,9 +160,8 @@
 ++ .SpritePtrs : 	@@ @@ @@ # Vargas by Poco Loco
 !b			32-Vargas-PocoLoco.bin
 
-++ .SpritePtrs : 	@@ @@ @@ # Wolf Monster
-			# 33 Missing
-!b			33-WolfMonster-incomplete.bin
+++ .SpritePtrs : 	@@ @@ @@ # Vomammoth by CtrlxZ
+!b			33-Vomammoth-CtrlxZ.bin
 
 ++ .SpritePtrs : 	@@ @@ @@ # Narshe Guard by Poco Loco
 !b			34-NarsheGuard-PocoLoco.bin
